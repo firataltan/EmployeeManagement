@@ -1,8 +1,8 @@
 *.cs linguist-language=C#
- *.html linguist-detectable=false
-*.js linguist-detectable=false
+*.cshtml linguist-language=C#
+*.js linguist-language=JavaScript
 *.css linguist-detectable=false
-*.scss linguist-detectable=false
+*.html linguist-detectable=false
 
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
