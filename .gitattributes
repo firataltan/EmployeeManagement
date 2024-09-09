@@ -1,4 +1,4 @@
- *.javascript linguist-detectable=false
+ *.JavaScript  linguist-detectable=false
 
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
