@@ -1,0 +1,201 @@
+﻿  @model IEnumerable<EmployeeManagement.ViewModels.EmployeeViewModel>
+
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    var i = 0;
+}
+
+
+
+
+@if (TempData["status"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["status"]
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<script>
+    function confirmDelete(id) {
+        if (confirm('Kayıt silinsin mi?')) {
+            document.getElementById('delete-form-' + id).submit();
+        }
+    }
+</script>
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sol Taraf: Admin Paneli -->
+        <div class="admin-panel">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Admin Paneli</h5>
+                </div>
+                <div class="card-body">
+                    <a asp-controller="Admin" asp-action="Register" class="btn btn-info mb-2">Admin Kayıt</a>
+                    <a asp-controller="Admin" asp-action="Login" class="btn btn-secondary mb-2">Admin Giriş</a>
+                    <a asp-controller="Admin" asp-action="Logout" class="btn btn-danger">Çıkış Yap</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sağ Taraf: Personel Listesi Tablosu -->
+        <div class="col-md-12">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Personel Listesi</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-bordered table-striped mb-0">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>P.No</th>
+                                    <th>TC Kimlik No</th>
+                                    <th>Ad</th>
+                                    <th>Soyad</th>
+                                    <th>Departman</th>
+                                    <th>Tel</th>
+                                    <th>Statü</th>
+                                    <th>Ünvan</th>
+                                    <th>Görev</th>
+                                    <th>Eğitim Durumu</th>
+                                    <th>Bölüm</th>
+                                    <th>Cinsiyet</th>
+                                    <th>İşe Giriş Tarihi</th>
+                                    <th>Kan Grubu</th>
+                                    <th>Engellilik Durumu</th>
+                                    <th>Aktiflik</th>
+                                    <th>Sıra No</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var employee in Model)
+                                {
+                                    <tr>
+                                        <td>@employee.Id</td>
+                                        <td>@employee.TCKimlikNo</td>
+                                        <td>@employee.Ad</td>
+                                        <td>@employee.Soyad</td>
+                                        <td>@employee.Departman</td>
+                                        <td>@employee.Telefon</td>
+                                        <td>@employee.Statü</td>
+                                        <td>@employee.Unvan</td>
+                                        <td>@employee.Görev</td>
+                                        <td>@employee.EğitimDurumu</td>
+                                        <td>@employee.Bolum</td>
+                                        <td>@employee.Cinsiyet</td>
+                                        <td>@employee.İşeGirişTarihi.ToShortDateString()</td>
+                                        <td>@employee.KanGrubu</td>
+                                        <td>@employee.EngellilikDurumu</td>
+                                        <td>@employee.Aktiflik</td>
+                                        <td>@(i += 1)</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a asp-controller="Employee" asp-action="Update" asp-route-id="@employee.Id" class="btn btn-warning btn-sm">Güncelle</a>
+                                                <form id="delete-form-@employee.Id" method="post" asp-controller="Employee" asp-action="Remove" style="display: inline;">
+                                                    <input type="hidden" name="id" value="@employee.Id" />
+                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(@employee.Id)">Sil</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+
+        <!-- PDF İndir Butonu -->
+        <form method="get" asp-action="ExportToPdf" class="mb-4">
+            <input type="hidden" name="searchTCKimlikNo" value="@ViewData["searchTCKimlikNo"]" />
+            <input type="hidden" name="searchAd" value="@ViewData["searchAd"]" />
+            <input type="hidden" name="searchSoyad" value="@ViewData["searchSoyad"]" />
+            <input type="hidden" name="searchDepartman" value="@ViewData["searchDepartman"]" />
+            <button type="submit" class="btn btn-secondary">PDF İndir</button>
+        </form>
+    }
+    <!-- Personel Arama Formu -->
+    <div class="col-md-9 offset-md-3 search-form">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Personel Arama</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-6">
+                            <label for="searchTCKimlikNo" class="form-label">TC Kimlik No:</label>
+                            <input type="text" class="form-control" id="searchTCKimlikNo" name="searchTCKimlikNo">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="searchAd" class="form-label">Ad:</label>
+                            <input type="text" class="form-control" id="searchAd" name="searchAd">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="searchSoyad" class="form-label">Soyad:</label>
+                            <input type="text" class="form-control" id="searchSoyad" name="searchSoyad">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="searchDepartman" class="form-label">Departman:</label>
+                            <input type="text" class="form-control" id="searchDepartman" name="searchDepartman">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="searchBolum" class="form-label">Bölüm:</label>
+                            <input type="text" class="form-control" id="searchBolum" name="searchBolum">
+                        </div>
+                        <div class="col-md-6 align-self-end">
+                            <button type="submit" class="btn btn-primary w-100">Ara</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+
+        <!-- Personel Ekleme Butonu -->
+        <!--
+                <div class="text-end">
+            <a asp-controller="employee" asp-action="add" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#personelEkleModal">
+                Personel Ekle
+
+            </a>
+        </div>
+        -->
+        <div class="text-end">
+            <a asp-controller="employee" asp-action="add" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#personelKayitModal">
+                Personel Ekle
+            </a>
+        </div>
+    }
+
+</div>
+
+
+ 

@@ -1,0 +1,116 @@
+﻿  @{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+@model EmployeeViewModel
+
+<h1 class="mb-4">Yeni Personel Ekle</h1>
+
+
+
+
+<form asp-controller="Employee" asp-action="Add" method="post" class="custom-form">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="TCKimlikNo">TC Kimlik No</label>
+            <input type="text" class="form-control" asp-for="TCKimlikNo" placeholder="TC Kimlik No">
+            <span class="text-danger" asp-validation-for="TCKimlikNo"> </span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="Ad">Ad</label>
+            <input type="text" class="form-control" asp-for="Ad" placeholder="Ad">
+            <span class="text-danger" asp-validation-for="Ad"> </span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="Soyad">Soyad</label>
+            <input type="text" class="form-control" asp-for="Soyad" placeholder="Soyad">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="Departman">Departman</label>
+            <input type="text" class="form-control" asp-for="Departman" placeholder="Departman">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="Telefon">Telefon</label>
+            <input type="text" class="form-control" asp-for="Telefon" placeholder="Telefon">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="Statü">Statü</label>
+            <input type="text" class="form-control" asp-for="Statü" placeholder="Statü">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="Unvan">Unvan</label>
+            <input type="text" class="form-control" asp-for="Unvan" placeholder="Unvan">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="Görev">Görev</label>
+            <input type="text" class="form-control" asp-for="Görev" placeholder="Görev">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="EğitimDurumu">Eğitim Durumu</label>
+            <input type="text" class="form-control" asp-for="EğitimDurumu" placeholder="Eğitim Durumu">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="Bolum">Bölüm</label>
+            <input type="text" class="form-control" asp-for="Bolum" placeholder="Bölüm">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="Cinsiyet">Cinsiyet</label>
+            <input type="text" class="form-control" asp-for="Cinsiyet" placeholder="Cinsiyet">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="İşeGirişTarihi">İşe Giriş Tarihi</label>
+            <input type="date" class="form-control" asp-for="İşeGirişTarihi">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="KanGrubu">Kan Grubu</label>
+            <input type="text" class="form-control" asp-for="KanGrubu" placeholder="Kan Grubu">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="EngellilikDurumu">Engellilik Durumu</label>
+            <input type="text" class="form-control" asp-for="EngellilikDurumu" placeholder="Engellilik Durumu">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="Aktiflik">Aktiflik</label>
+            <input type="text" class="form-control" asp-for="Aktiflik" placeholder="Aktiflik">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Personel Kaydet</button>
+</form>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+ 
